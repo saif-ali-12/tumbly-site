@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tumbly – Your Daily Sip Companion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    header {
+      background: #ffffff;
+      padding: 1rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    header h1 {
+      color: #2c3e50;
+    }
+    nav a {
+      margin-left: 1rem;
+      text-decoration: none;
+      color: #2c3e50;
+      font-weight: 500;
+    }
+    .hero {
+      padding: 4rem 2rem;
+      text-align: center;
+      background: linear-gradient(to right, #ffe0ec, #e0f7fa);
+    }
+    .hero h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: 1rem;
+      margin-bottom: 2rem;
+    }
+    .hero button {
+      padding: 0.75rem 1.5rem;
+      margin: 0 0.5rem;
+      border: none;
+      background: #2c3e50;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .products, .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      padding: 2rem;
+    }
+    .gallery-item {
+      text-align: center;
+      max-width: 300px;
+    }
+    .gallery img {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .gallery p {
+      margin-top: 0.5rem;
+      font-weight: 500;
+    }
+    .gallery button {
+      margin-top: 0.5rem;
+      background: #2c3e50;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .cart {
+      padding: 2rem;
+      background: #fff;
+      max-width: 600px;
+      margin: 0 auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .cart h3 {
+      margin-bottom: 1rem;
+    }
+    .cart ul {
+      list-style: none;
+      padding: 0;
+    }
+    .cart li {
+      margin: 0.5rem 0;
+    }
+    .footer {
+      background: #2c3e50;
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 3rem;
+    }
+    @media (max-width: 600px) {
+      .products, .gallery {
+        flex-direction: column;
+        align-items: center;
+      }
+      nav {
+        width: 100%;
+        text-align: center;
+        margin-top: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Tumbly</h1>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#shop">Shop</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact (WhatsApp)</a>
+      <a href="#cart">Cart</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Stay Cool. Stay Hydrated. Stay Stylish.</h2>
+    <p>Shop eco-friendly, double-walled tumblers that keep your drink perfect all day.</p>
+    <button>Shop Now</button>
+  </section>
+
+  <section class="gallery">
+    <div class="gallery-item">
+      <img src="IMG-20250728-WA0005.jpg" alt="Pastel Tumblers" />
+      <p>Pastel Handle Tumblers – PKR 3,499</p>
+      <button onclick="addToCart('Pastel Handle Tumblers', 3499)">Add to Cart</button>
+    </div>
+    <div class="gallery-item">
+      <img src="IMG-20250728-WA0004.jpg" alt="Floral Tumblers" />
+      <p>Floral Print Tumblers – PKR 3,999</p>
+      <button onclick="addToCart('Floral Print Tumblers', 3999)">Add to Cart</button>
+    </div>
+    <div class="gallery-item">
+      <img src="IMG-20250728-WA0003.jpg" alt="Stanley Tumblers" />
+      <p>Stanley Style Tumblers – PKR 4,999</p>
+      <button onclick="addToCart('Stanley Style Tumblers', 4999)">Add to Cart</button>
+    </div>
+  </section>
+
+  <section class="cart" id="cart">
+    <h3>Your Cart</h3>
+    <ul id="cart-items"></ul>
+    <p><strong>Total: PKR <span id="total">0</span></strong></p>
+  </section>
+
+  <footer class="footer">
+    <p>Contact us: 📞 <a href="https://wa.me/923309997574" style="color: #fff; text-decoration: underline;">0330-9997574</a> | 📧 <a href="mailto:tumbly.pk@gmail.com" style="color: #fff; text-decoration: underline;">tumbly.pk@gmail.com</a><br>© 2025 Tumbly | Designed in Pakistan | All rights reserved.</p>
+  </footer>
+
+  <script>
+    let cart = [];
+
+    function addToCart(product, price) {
+      cart.push({ product, price });
+      renderCart();
+    }
+
+    function renderCart() {
+      const cartItems = document.getElementById('cart-items');
+      const totalSpan = document.getElementById('total');
+      cartItems.innerHTML = '';
+      let total = 0;
+
+      cart.forEach((item) => {
+        const li = document.createElement('li');
+        li.textContent = `${item.product} – PKR ${item.price}`;
+        cartItems.appendChild(li);
+        total += item.price;
+      });
+
+      totalSpan.textContent = total;
+    }
+  </script>
+</body>
+</html>
